@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASTRAL STORE — Custom FiveM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/protection.js" defer></script>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pre-logo">ASTRAL STORE</div>
+  <div class="pre-bar"></div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div class="mesh"></div>
+<div class="grain"></div>
+<div class="scan-particles" id="particles"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span> ASTRAL STORE</div>
+  <nav>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#trabajos">Trabajos</a></li>
+      <li><a href="#resenas">Valoraciones</a></li>
+      <li><a href="#partners">Partners</a></li>
+    </ul>
+  </nav>
+  <a href="https://discord.gg/DKr5vPh8HN" target="_blank" rel="noopener" class="nav-cta">Abrir Ticket</a>
+  <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#servicios">Servicios</a>
+  <a href="#trabajos">Trabajos</a>
+  <a href="#resenas">Valoraciones</a>
+  <a href="#partners">Partners</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <span class="eyebrow"><span class="n">+50</span> clientes ya confían en nosotros</span>
+  <h1>ASTRAL STORE</h1>
+  <p class="sub">La tienda custom de referencia para <b>FiveM</b>. Ropa exclusiva, props únicos y vehículos que no existen en ningún otro servidor. <b>Tu roleplay, tu identidad.</b></p>
+  <div class="hero-actions">
+    <a href="#servicios" class="btn-primary">Ver servicios ✦</a>
+    <a href="#resenas" class="btn-ghost">Leer valoraciones</a>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="num" data-count="50" data-suffix="+">0</div><div class="lbl">Clientes confían</div></div>
+    <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">Líneas de servicio</div></div>
+    <div class="stat"><div class="num" data-count-text="1-2h">1-2h</div><div class="lbl">Respuesta en ticket</div></div>
+  </div>
+  <div class="scroll-cue"></div>
+</section>
+
+<div class="trust-marquee">
+  <div class="trust-track">
+    <span>Ropa exclusiva</span><span>Props únicos</span><span>Vehículos blindados</span><span>+50 clientes</span><span>Diseño a medida</span><span>Texturas custom</span>
+    <span>Ropa exclusiva</span><span>Props únicos</span><span>Vehículos blindados</span><span>+50 clientes</span><span>Diseño a medida</span><span>Texturas custom</span>
+  </div>
+</div>
+
+<!-- ============ SERVICIOS ============ -->
+<section id="servicios">
+  <div class="section-head reveal">
+    <span class="tag">Catálogo</span>
+    <h2>Nuestros Servicios</h2>
+    <p>Tres líneas de trabajo pensadas para que tu facción, tu banda o tu negocio no se parezcan a nadie más.</p>
+  </div>
+
+  <div class="services-grid" id="servicesGrid">
+
+    <div class="service-card reveal">
+      <div class="service-icon">🧵</div>
+      <span class="kicker">Revoluciona tus peds</span>
+      <h3>Diseño y Ropa Exclusiva</h3>
+      <p class="desc">¿Tu facción viste igual que todo el mundo? ¿Tus civiles parecen clones del GTA base? Crea marcas propias, uniformes de mafia únicos o conjuntos brutales que nadie más tenga.</p>
+      <div class="price-row"><span class="name">Prenda Nueva</span><span class="price">+5€ /prenda</span></div>
+      <div class="price-row"><span class="name">Textura Extra</span><span class="price">+2€ /textura</span></div>
+      <div class="how-to"><b>Cómo pedir:</b> abre ticket en 🎫・tickets y cuéntanos colores, logos y referencias. La primera impresión lo es todo — deja que tu ropa hable antes de sacar el arma.</div>
+      <a href="https://discord.gg/DKr5vPh8HN" target="_blank" rel="noopener" class="btn-buy">Comprar ahora</a>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🗿</div>
+      <span class="kicker">Marca la diferencia</span>
+      <h3>Props Exclusivos</h3>
+      <p class="desc">Dale identidad real a tu personaje, tu banda o tu negocio con accesorios únicos que marquen la diferencia en cada escena de rol.</p>
+      <div class="price-row"><span class="name">Pack Individual — 1 prop</span><span class="price">5€</span></div>
+      <div class="price-row"><span class="name">Pack Dúo — 2 props</span><span class="price">9€ <span class="save">ahorras 1€</span></span></div>
+      <div class="price-row"><span class="name">Pack Grupo — 4 props</span><span class="price">15€ <span class="save">ahorras 5€</span></span></div>
+      <div class="price-row"><span class="name">Función "Usable" (interactivo)</span><span class="price">+5€ /prop</span></div>
+      <div class="how-to"><b>Cómo pedir:</b> abre ticket en 🎫・tickets con tu idea, logo o modelo de referencia. Un buen rol no depende solo de la voz — los detalles visuales lo cambian todo.</div>
+      <a href="https://discord.gg/DKr5vPh8HN" target="_blank" rel="noopener" class="btn-buy">Comprar ahora</a>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🚘</div>
+      <span class="kicker">Premium customs</span>
+      <h3>Vehículos a Medida</h3>
+      <p class="desc">¿Listo para dominar las calles? Convierte tu vehículo en una bestia única, blindada y con estilo. Si no da miedo al verlo por el retrovisor, no es un coche.</p>
+      <div class="price-row"><span class="name">Quitar Marca</span><span class="price">+1€</span></div>
+      <div class="price-row"><span class="name">Neones</span><span class="price">+5€</span></div>
+      <div class="price-row"><span class="name">Blindaje de ventanas</span><span class="price">+5€</span></div>
+      <div class="price-row"><span class="name">Ruedas antibalas</span><span class="price">+5€</span></div>
+      <div class="price-row"><span class="name">Props Vanilla</span><span class="price">+2€ /u</span></div>
+      <div class="price-row"><span class="name">Props Custom exclusivos</span><span class="price">+5€ /u</span></div>
+      <div class="how-to"><b>Cómo trabajamos:</b> abre ticket en 🎫・tickets, nos dejas las llaves y tu idea. No nos hacemos responsables de las envidias que rompan cuellos al verte pasar.</div>
+      <a href="https://discord.gg/DKr5vPh8HN" target="_blank" rel="noopener" class="btn-buy">Comprar ahora</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TRABAJOS ============ -->
+<section id="trabajos">
+  <div class="section-head reveal">
+    <span class="tag">Portfolio</span>
+    <h2>Nuestros Trabajos</h2>
+    <p>Encargos reales que hemos hecho para clientes: ropa, props y vehículos. Así de bien queda cuando confías en ASTRAL STORE.</p>
+  </div>
+  <div class="works-grid" id="worksGrid"></div>
+</section>
+
+<!-- ============ RESEÑAS ============ -->
+<section id="resenas">
+  <div class="section-head reveal">
+    <span class="tag">Confianza real</span>
+    <h2>Lo que dicen nuestros clientes</h2>
+    <p>Más de 50 personas ya han confiado en ASTRAL STORE. Deja tu propia valoración — solo tú puedes escribirla, nadie puede editarla por ti.</p>
+  </div>
+  <div class="reviews-wrap">
+    <div class="reviews-top">
+      <button class="btn-primary" id="openReviewModal">＋ Dejar una valoración</button>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section id="partners">
+  <div class="section-head reveal">
+    <span class="tag">Colaboraciones</span>
+    <h2>Nuestros Partners</h2>
+    <p>Servidores y tiendas con los que trabajamos codo a codo.</p>
+  </div>
+  <div class="partners-grid" id="partnersGrid"></div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section>
+  <div class="cta-band reveal">
+    <h2>¿Listo para destacar?</h2>
+    <p>Abre un ticket en 🎫・tickets y cuéntanos tu idea. Diseñamos, pintamos y blindamos lo que imagines.</p>
+    <a href="#servicios" class="btn-primary">Ver tarifas</a>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">ASTRAL STORE</div>
+  <p>Tienda custom para FiveM — ropa, props y vehículos únicos.</p>
+  <p style="margin-top:10px; opacity:0.6;">© <span id="year"></span> ASTRAL STORE. Todos los derechos reservados.</p>
+</footer>
+
+<!-- ============ MODAL: REVIEW ============ -->
+<div class="modal-overlay" id="reviewModalOverlay">
+  <div class="modal">
+    <button class="modal-close" data-close>✕</button>
+    <h3>Deja tu valoración</h3>
+    <form id="reviewForm">
+      <div class="field">
+        <label>Tu nombre</label>
+        <input type="text" id="revName" placeholder="Ej: Kevin_RP" required maxlength="30">
+      </div>
+      <div class="field">
+        <label>Foto de perfil (URL, opcional)</label>
+        <input type="url" id="revPhoto" placeholder="https://...">
+        <div class="field-hint">Si lo dejas vacío, usaremos tu inicial con un avatar de color.</div>
+      </div>
+      <div class="field">
+        <label>Puntuación</label>
+        <div class="star-pick" id="starPick">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Tu opinión</label>
+        <textarea id="revText" placeholder="Cuéntanos tu experiencia con ASTRAL STORE..." required maxlength="300"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-submit">Publicar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: SERVICE (admin) ============ -->
+<div class="modal-overlay" id="serviceModalOverlay">
+  <div class="modal">
+    <button class="modal-close" data-close>✕</button>
+    <h3>Nuevo servicio</h3>
+    <form id="serviceForm">
+      <div class="field"><label>Icono (un emoji)</label><input type="text" id="svIcon" placeholder="✨" maxlength="4"></div>
+      <div class="field"><label>Etiqueta pequeña</label><input type="text" id="svKicker" placeholder="Ej: Novedad" maxlength="40"></div>
+      <div class="field"><label>Título</label><input type="text" id="svTitle" placeholder="Ej: Tatuajes Faciales" required maxlength="60"></div>
+      <div class="field"><label>Descripción</label><textarea id="svDesc" placeholder="Describe el servicio..." maxlength="220"></textarea></div>
+      <div class="field"><label>Línea de precio</label><input type="text" id="svPrice1" placeholder="Ej: Diseño básico"></div>
+      <div class="field"><label>Precio</label><input type="text" id="svPrice1v" placeholder="Ej: +3€"></div>
+      <div class="field"><label>Cómo pedir</label><textarea id="svHow" placeholder="Ej: Abre ticket en 🎫・tickets..." maxlength="200"></textarea></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-submit">Publicar servicio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: PARTNER (admin) ============ -->
+<div class="modal-overlay" id="partnerModalOverlay">
+  <div class="modal">
+    <button class="modal-close" data-close>✕</button>
+    <h3>Nuevo partner</h3>
+    <form id="partnerForm">
+      <div class="field"><label>Nombre</label><input type="text" id="ptName" required maxlength="40"></div>
+      <div class="field"><label>Logo (URL, opcional)</label><input type="url" id="ptLogo" placeholder="https://..."></div>
+      <div class="field"><label>Descripción corta</label><input type="text" id="ptDesc" maxlength="80" placeholder="Ej: Servidor de rol policial"></div>
+      <div class="field"><label>Enlace (opcional)</label><input type="url" id="ptLink" placeholder="https://discord.gg/..."></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-submit">Publicar partner</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: TRABAJO (admin) ============ -->
+<div class="modal-overlay" id="workModalOverlay">
+  <div class="modal">
+    <button class="modal-close" data-close>✕</button>
+    <h3>Nuevo trabajo</h3>
+    <form id="workForm">
+      <div class="field">
+        <label>Foto del trabajo</label>
+        <input type="file" id="wkPhotoFile" accept="image/*">
+        <div class="field-hint">Se guarda directamente en el navegador. Si son muchas fotos o muy pesadas, mejor usa una URL de imagen abajo.</div>
+      </div>
+      <div class="field">
+        <label>...o URL de la imagen (opcional si ya subiste un archivo)</label>
+        <input type="url" id="wkPhotoUrl" placeholder="https://...">
+      </div>
+      <div class="field"><label>Título del trabajo</label><input type="text" id="wkTitle" placeholder="Ej: Uniforme Mafia Azul" required maxlength="60"></div>
+      <div class="field"><label>Descripción</label><textarea id="wkText" placeholder="Cuenta qué se hizo, para quién o qué incluye..." maxlength="300"></textarea></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-submit">Publicar trabajo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ ADMIN DOCK FLOTANTE ============ -->
+<div class="admin-dock" id="adminDock">
+  <div class="admin-dock-items" id="adminDockItems">
+    <button class="dock-item" id="dockAddService">
+      <span class="dock-ico">🧵</span>
+      <span>Nuevo servicio</span>
+    </button>
+    <button class="dock-item" id="dockAddPartner">
+      <span class="dock-ico">🤝</span>
+      <span>Nuevo partner</span>
+    </button>
+    <button class="dock-item" id="dockAddWork">
+      <span class="dock-ico">🖼️</span>
+      <span>Nuevo trabajo</span>
+    </button>
+    <button class="dock-item dock-lock" id="dockLock">
+      <span class="dock-ico">🔒</span>
+      <span>Cerrar modo admin</span>
+    </button>
+  </div>
+  <button class="admin-fab" id="adminFab" title="Panel de administración">
+    <span class="fab-ring"></span>
+    <span class="fab-icon" id="fabIcon">🔑</span>
+  </button>
+</div>
+
+<script src="assets/js/script.js" defer></script>
+</body>
+</html>
