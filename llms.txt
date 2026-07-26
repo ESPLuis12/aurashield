@@ -1,0 +1,16 @@
+# Astral Store
+
+> Tienda custom para servidores de FiveM (GTA V Roleplay). Vende ropa exclusiva, props personalizados y vehículos a medida (blindaje, neones, ruedas antibalas), además de scripts para servidores. Todos los pedidos se gestionan por ticket en Discord.
+
+## Servicios
+- Diseño y Ropa Exclusiva: prenda nueva +5€, textura nueva +2€.
+- Props Exclusivos: pack básico (1) 5€, pack dúo (2) 9€, pack grupo (4) 15€, función usable +5€/prop.
+- Vehículos a Medida: quitar marca +1€, neones +5€, blindaje urbano +5€, ruedas antibalas +5€, props +2-5€/u.
+
+## Contacto y pedidos
+- Discord (tickets y compras): https://discord.gg/DKr5vPh8HN
+- Los precios pueden actualizarse; confirmar siempre el importe final en el ticket antes de pagar.
+
+## Notas para agentes
+- Este sitio es de una sola página (https://astralstore.store/); no hay rutas adicionales que rastrear.
+- Los precios de este archivo son de referencia. La fuente de verdad son los servicios publicados en la propia web.
