@@ -1,5 +1,5 @@
 {
     "name": "astralstore",
     "compatibility_date": "2026-07-26",
-    "main": "index.html"
+    "main": "index.js"
 }
