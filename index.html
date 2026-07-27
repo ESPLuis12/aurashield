@@ -1,8 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- ============ FAVICON (SVG inline, sin archivos externos) ============ -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23b15eff'/%3E%3Cstop offset='1' stop-color='%23ff3d7d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230a0512'/%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-size='34' text-anchor='middle' fill='white' font-family='Arial'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23b15eff'/%3E%3Cstop offset='1' stop-color='%23ff3d7d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230a0512'/%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-size='34' text-anchor='middle' fill='white' font-family='Arial'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
 
 <!-- ============ SEO PRIMARIO ============ -->
 <title>Astral Store | Tienda Custom para FiveM — Ropa, Props y Vehículos a Medida</title>
@@ -13,6 +18,7 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="theme-color" content="#0A0512">
 <meta name="format-detection" content="telephone=no">
+
 
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="website">
@@ -206,6 +212,20 @@ section{position:relative; padding:120px 0; z-index:2;}
   66%{transform:translate(-5%,-3%) scale(.95);}
 }
 
+/* grano sutil — le quita el aspecto "flat" al degradado */
+.grain{
+  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* barra de progreso de scroll */
+#scrollProgress{
+  position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg,var(--violet),var(--aurora),var(--pink));
+  box-shadow:0 0 12px rgba(177,94,255,.7);
+  transition:width .1s linear;
+}
+
 /* ================================================================
    HEADER
    ================================================================ */
@@ -250,12 +270,21 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
   font-family:var(--font-body); font-weight:700; font-size:.92rem;
   padding:12px 22px; border-radius:999px; border:1px solid transparent;
   transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+  will-change:transform;
 }
 .btn:active{transform:scale(.97);}
 .btn-primary{
   background:linear-gradient(120deg,var(--violet),var(--pink));
   color:#fff; box-shadow:0 8px 26px -8px rgba(177,94,255,.7);
+  position:relative; overflow:hidden; isolation:isolate;
 }
+.btn-primary::before{
+  content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);
+  transform:translateX(-120%); transition:transform .7s ease;
+}
+.btn-primary:hover::before{transform:translateX(120%);}
+.btn-primary span, .btn-primary{ position:relative; }
 .btn-primary:hover{box-shadow:0 10px 34px -6px rgba(177,94,255,.9); transform:translateY(-2px);}
 .btn-ghost{
   background:rgba(255,255,255,.03); color:var(--text); border-color:var(--border-strong);
@@ -302,11 +331,25 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
   font-size:clamp(3rem,9vw,6.2rem); line-height:.95; margin:18px 0 22px;
   background:linear-gradient(115deg,#fff 20%,var(--violet) 55%,var(--aurora) 85%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation:gradient-pan 8s ease infinite; background-size:200% 200%;
+  background-size:200% 200%;
+  animation:gradient-pan 8s ease infinite, rise-in .8s cubic-bezier(.16,.9,.3,1) both;
+  animation-delay:0s, .1s;
 }
 @keyframes gradient-pan{
   0%,100%{background-position:0% 50%;}
   50%{background-position:100% 50%;}
+}
+
+/* ---- Entrada en cascada del hero al cargar (fade + rise, robusta) ---- */
+@keyframes rise-in{ from{ opacity:0; transform:translateY(22px); } to{ opacity:1; transform:translateY(0); } }
+.hero-inner > p.eyebrow{ animation:rise-in .7s cubic-bezier(.16,.9,.3,1) both; }
+.hero-inner > p.lead{ animation:rise-in .7s cubic-bezier(.16,.9,.3,1) both .28s; }
+.hero-inner > .hero-ctas{ animation:rise-in .7s cubic-bezier(.16,.9,.3,1) both .4s; }
+.hero-inner > .hero-stats{ animation:rise-in .7s cubic-bezier(.16,.9,.3,1) both .52s; }
+@media (prefers-reduced-motion:reduce){
+  .hero h1, .hero-inner > p.eyebrow, .hero-inner > p.lead, .hero-inner > .hero-ctas, .hero-inner > .hero-stats{
+    animation:none; opacity:1; transform:none;
+  }
 }
 .hero p.lead{font-size:1.2rem; color:var(--muted); max-width:600px; margin:0 0 40px;}
 .hero p.lead strong{color:var(--text);}
@@ -377,7 +420,7 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
 .card:hover::before{opacity:1; animation:spin-angle 3.2s linear infinite;}
 @keyframes spin-angle{to{--angle:360deg;}}
 .card:hover{transform:translateY(-6px);}
-.card{transition:transform .4s cubic-bezier(.2,.7,.3,1);}
+.card{transition:transform .35s cubic-bezier(.2,.7,.3,1), border-color .3s ease; will-change:transform;}
 
 .card-icon{
   width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center;
@@ -438,6 +481,27 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
 .pf-note{margin-top:26px; color:var(--muted-2); font-size:.88rem;}
 .pf-note a{color:var(--aurora); font-weight:700;}
 
+/* ---- Galería de fotos (compartida: trabajos + scripts) ---- */
+.gallery{position:relative; height:220px; background:var(--void-2); overflow:hidden;}
+.gallery img{width:100%; height:100%; object-fit:cover; display:block; user-select:none;}
+.gallery-arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+  width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,.25);
+  background:rgba(10,5,18,.55); backdrop-filter:blur(4px); color:#fff; font-size:.9rem;
+  display:flex; align-items:center; justify-content:center; transition:background .2s ease, transform .2s ease;
+}
+.gallery-arrow:hover{background:rgba(177,94,255,.55); transform:translateY(-50%) scale(1.08);}
+.gallery-prev{left:10px;} .gallery-next{right:10px;}
+.gallery-dots{position:absolute; bottom:10px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px;}
+.gallery-dots button{
+  width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.4); border:none; padding:0;
+  transition:background .2s ease, transform .2s ease;
+}
+.gallery-dots button.active{background:var(--aurora); transform:scale(1.3);}
+.script-card .gallery{ border-radius:var(--radius-m) var(--radius-m) 0 0; width:100%; }
+.pf-card .gallery{ border-radius:0; width:100%; }
+.script-card-body{padding:26px; display:flex; flex-direction:column; gap:12px;}
+
 /* ================================================================
    SCRIPTS
    ================================================================ */
@@ -445,7 +509,7 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
 @media (max-width:980px){ .scripts-grid{grid-template-columns:1fr; max-width:520px;} }
 .script-card{
   border:1px solid var(--border); border-radius:var(--radius-m); background:var(--surface);
-  padding:26px; display:flex; flex-direction:column; gap:14px;
+  display:flex; flex-direction:column; overflow:hidden; padding:0;
   transition:border-color .3s ease, transform .3s ease;
 }
 .script-card:hover{border-color:var(--border-strong); transform:translateY(-4px);}
@@ -454,7 +518,22 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
   border:1px solid rgba(43,245,198,.35); padding:4px 10px; border-radius:999px;
 }
 .script-card h4{font-size:1.15rem; margin:0;}
-.script-card p{font-size:.9rem; color:var(--muted); margin:0; flex:1;}
+.script-card p{font-size:.9rem; color:var(--muted); margin:0;}
+.script-desc-short{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.script-more{
+  max-height:0; opacity:0; overflow:hidden;
+  transition:max-height .45s cubic-bezier(.2,.7,.3,1), opacity .35s ease;
+}
+.script-card.expanded .script-more{max-height:400px; opacity:1;}
+.script-card.expanded .script-desc-short{display:none;}
+.script-toggle{
+  align-self:flex-start; background:none; border:none; padding:0; color:var(--aurora);
+  font-size:.85rem; font-weight:700; display:flex; align-items:center; gap:5px;
+}
+.script-toggle svg{transition:transform .3s ease;}
+.script-card.expanded .script-toggle svg{transform:rotate(180deg);}
 
 /* ================================================================
    RESEÑAS
@@ -481,19 +560,25 @@ nav.primary-nav a:hover::after, nav.primary-nav a:focus-visible::after{width:100
    PARTNERS
    ================================================================ */
 .partners-row{
-  display:flex; flex-wrap:wrap; gap:18px;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:22px;
 }
-.partner-chip{
-  display:flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:999px;
-  padding:10px 20px 10px 10px; background:var(--surface);
+.partner-card{
+  display:flex; flex-direction:column; align-items:flex-start; gap:14px;
+  border:1px solid var(--border); border-radius:var(--radius-m); background:var(--surface);
+  padding:26px; text-align:left;
   transition:border-color .3s ease, transform .3s ease;
 }
-.partner-chip:hover{border-color:var(--aurora); transform:translateY(-3px);}
+.partner-card:hover{border-color:var(--aurora); transform:translateY(-4px);}
 .partner-logo{
-  width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--violet-soft),var(--aurora));
-  display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; color:#0a0512; font-size:.8rem;
+  width:64px; height:64px; border-radius:18px; background:linear-gradient(135deg,var(--violet-soft),var(--aurora));
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; color:#0a0512; font-size:1.4rem;
+  flex:none;
 }
-.partner-chip span{font-size:.9rem; color:var(--muted);}
+.partner-card h4{font-family:var(--font-display); font-size:1.15rem; margin:0;}
+.partner-card p{font-size:.88rem; color:var(--muted); margin:0; line-height:1.5;}
+.partner-visit{
+  margin-top:auto; font-size:.82rem; font-weight:700; color:var(--aurora); display:flex; align-items:center; gap:5px;
+}
 
 /* ================================================================
    CTA FINAL
@@ -644,6 +729,8 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
   <span class="blob b2"></span>
   <span class="blob b3"></span>
 </div>
+<div class="grain" aria-hidden="true"></div>
+<div id="scrollProgress" aria-hidden="true"></div>
 
 <header class="site" id="siteHeader">
   <div class="wrap nav-inner">
@@ -698,8 +785,51 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
         <p>Tres líneas de trabajo pensadas para que tu facción, tu banda o tu negocio no se parezcan a nadie más.</p>
       </div>
 
-      <div class="services-grid" id="servicesGrid" data-loading="true">
-        <div class="skel-card"></div><div class="skel-card"></div><div class="skel-card"></div>
+      <div class="services-grid" id="servicesGrid">
+        <!-- Contenido real de referencia, visible sin JavaScript (crawlers de IA y buscadores).
+             Se sustituye por los datos en vivo de Supabase en cuanto haya alguno publicado. -->
+        <article class="card reveal in-view">
+          <div class="card-icon" aria-hidden="true">🧵</div>
+          <p class="eyebrow">Revoluciona tus peds</p>
+          <h3>Diseño y Ropa Exclusiva</h3>
+          <p class="desc">Marcas propias, uniformes de facción y conjuntos únicos para que tu banda, tu negocio o tu civil no vistan como todo el mundo.</p>
+          <ul class="price-list">
+            <li><span class="lbl">Prenda nueva</span><span class="amt">+5€ /prenda</span></li>
+            <li><span class="lbl">Textura nueva</span><span class="amt">+2€ /textura</span></li>
+          </ul>
+          <p class="howto"><b>Cómo pedir:</b> abre ticket en 🎫・tickets y cuéntanos colores, logos y referencias.</p>
+          <a class="btn btn-primary" href="https://discord.gg/DKr5vPh8HN">Comprar ahora</a>
+        </article>
+        <article class="card reveal in-view" style="transition-delay:.08s">
+          <div class="card-icon" aria-hidden="true">🗿</div>
+          <p class="eyebrow">Marca la diferencia</p>
+          <h3>Props Exclusivos</h3>
+          <p class="desc">Accesorios únicos con función interactiva opcional, para dar identidad real a tu personaje o negocio de rol.</p>
+          <ul class="price-list">
+            <li><span class="lbl">Pack básico — 1 prop</span><span class="amt">5€</span></li>
+            <li><span class="lbl">Pack dúo — 2 props</span><span class="amt">9€<span class="save">ahorras 1€</span></span></li>
+            <li><span class="lbl">Pack grupo — 4 props</span><span class="amt">15€<span class="save">ahorras 5€</span></span></li>
+            <li><span class="lbl">Función "usable" (interactivo)</span><span class="amt">+5€ /prop</span></li>
+          </ul>
+          <p class="howto"><b>Cómo pedir:</b> abre ticket en 🎫・tickets con tu idea, logo o modelo de referencia.</p>
+          <a class="btn btn-primary" href="https://discord.gg/DKr5vPh8HN">Comprar ahora</a>
+        </article>
+        <article class="card reveal in-view" style="transition-delay:.16s">
+          <div class="card-icon" aria-hidden="true">🚘</div>
+          <p class="eyebrow">Premium customs</p>
+          <h3>Vehículos a Medida</h3>
+          <p class="desc">Convierte tu vehículo en una bestia única, blindada y con estilo propio.</p>
+          <ul class="price-list">
+            <li><span class="lbl">Quitar marca</span><span class="amt">+1€</span></li>
+            <li><span class="lbl">Iluminación — neones externos</span><span class="amt">+5€</span></li>
+            <li><span class="lbl">Blindaje urbano — ventanas reforzadas</span><span class="amt">+5€</span></li>
+            <li><span class="lbl">Ruedas antibalas</span><span class="amt">+5€</span></li>
+            <li><span class="lbl">Props vanilla</span><span class="amt">+2€ /u</span></li>
+            <li><span class="lbl">Props custom exclusivos</span><span class="amt">+5€ /u</span></li>
+          </ul>
+          <p class="howto"><b>Cómo trabajamos:</b> abre ticket en 🎫・tickets, nos dejas las llaves y tu idea.</p>
+          <a class="btn btn-primary" href="https://discord.gg/DKr5vPh8HN">Comprar ahora</a>
+        </article>
       </div>
     </div>
   </section>
@@ -711,8 +841,11 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
         <h2>Nuestros Trabajos</h2>
         <p>Encargos reales que hacemos para clientes: ropa, props y vehículos. Así de bien queda cuando confías en Astral Store.</p>
       </div>
-      <div class="portfolio-scroll" id="worksScroll" data-loading="true">
-        <div class="skel-pf"></div><div class="skel-pf"></div><div class="skel-pf"></div>
+      <div class="portfolio-scroll" id="worksScroll">
+        <div class="empty-state" style="width:100%">
+          <strong>Publicando nuestros primeros trabajos</strong>
+          Encargos reales de ropa, props y vehículos para clientes de FiveM — se irán publicando aquí. Mientras tanto, pide ejemplos directamente en <a href="https://discord.gg/DKr5vPh8HN" style="color:var(--aurora); font-weight:700;">Discord</a>.
+        </div>
       </div>
     </div>
   </section>
@@ -724,8 +857,11 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
         <h2>Nuestros Scripts</h2>
         <p>Recursos y scripts a la venta para tu servidor: fotos, vídeos de demostración y el enlace directo de compra.</p>
       </div>
-      <div class="scripts-grid" id="scriptsGrid" data-loading="true">
-        <div class="skel-card"></div><div class="skel-card"></div><div class="skel-card"></div>
+      <div class="scripts-grid" id="scriptsGrid">
+        <div class="empty-state">
+          <strong>Próximamente en venta</strong>
+          Estamos preparando los primeros scripts para FiveM. Pregunta disponibilidad en <a href="https://discord.gg/DKr5vPh8HN" style="color:var(--aurora); font-weight:700;">Discord</a>.
+        </div>
       </div>
     </div>
   </section>
@@ -737,8 +873,11 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
         <h2>Lo que dicen nuestros clientes</h2>
         <p>Más de 50 personas ya han confiado en Astral Store.</p>
       </div>
-      <div class="reviews-grid" id="reviewsGrid" data-loading="true">
-        <div class="skel-card"></div><div class="skel-card"></div><div class="skel-card"></div>
+      <div class="reviews-grid" id="reviewsGrid">
+        <div class="empty-state">
+          <strong>Las valoraciones de nuestros clientes llegarán pronto</strong>
+          Astral Store trabaja con clientes reales de servidores FiveM a través de tickets de Discord.
+        </div>
       </div>
       <p class="reviews-cta"><button class="btn btn-primary" id="addReviewBtn" hidden>＋ Nueva valoración</button></p>
     </div>
@@ -751,8 +890,11 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
         <h2>Nuestros Partners</h2>
         <p>Servidores y tiendas con los que trabajamos codo a codo.</p>
       </div>
-      <div class="partners-row" id="partnersRow" data-loading="true">
-        <div class="skel-chip"></div><div class="skel-chip"></div><div class="skel-chip"></div>
+      <div class="partners-row" id="partnersRow">
+        <div class="empty-state" style="width:100%">
+          <strong>Buscando colaboraciones</strong>
+          Todavía no hay partners publicados. Si tienes un servidor o tienda FiveM y quieres colaborar, escríbenos por <a href="https://discord.gg/DKr5vPh8HN" style="color:var(--aurora); font-weight:700;">Discord</a>.
+        </div>
       </div>
     </div>
   </section>
@@ -951,10 +1093,13 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
   /* ---------- Header on scroll ---------- */
   var header = document.getElementById('siteHeader');
   var toTop = document.getElementById('toTop');
+  var scrollBar = document.getElementById('scrollProgress');
   function onScroll(){
     var y = window.scrollY;
     header.classList.toggle('scrolled', y > 40);
     toTop.classList.toggle('show', y > 500);
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    scrollBar.style.width = (docH > 0 ? Math.min(100, (y / docH) * 100) : 0) + '%';
   }
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
@@ -1066,13 +1211,54 @@ footer{padding:70px 0 40px; position:relative; z-index:2;}
   });
 
   /* ---------- Parallax on mouse move ---------- */
-  if(!reduceMotion && window.matchMedia('(pointer:fine)').matches){
+  var pointerFine = window.matchMedia('(pointer:fine)').matches;
+  if(!reduceMotion && pointerFine){
     document.addEventListener('mousemove', function(e){
       var x = (e.clientX / window.innerWidth - .5) * 18;
       var y = (e.clientY / window.innerHeight - .5) * 18;
       canvas.style.transform = 'translate(' + (-x) + 'px,' + (-y) + 'px)';
     });
   }
+
+  /* ---------- Tilt 3D en tarjetas (solo ratón fino, sin motion reducido) ---------- */
+  if(!reduceMotion && pointerFine){
+    document.addEventListener('mousemove', function(e){
+      var el = e.target.closest('.card');
+      if(!el){ return; }
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - .5;
+      var py = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = 'perspective(900px) rotateX(' + (-py * 6) + 'deg) rotateY(' + (px * 6) + 'deg) translateY(-6px)';
+    }, {passive:true});
+    document.addEventListener('mouseover', function(e){
+      var el = e.target.closest('.card');
+      if(el) el.style.transition = 'transform .12s ease-out';
+    });
+    document.addEventListener('mouseout', function(e){
+      var el = e.target.closest('.card');
+      if(el && !el.contains(e.relatedTarget)){
+        el.style.transition = 'transform .5s cubic-bezier(.2,.7,.3,1)';
+        el.style.transform = '';
+      }
+    });
+  }
+
+  /* ---------- Botones magnéticos ---------- */
+  if(!reduceMotion && pointerFine){
+    document.querySelectorAll('.btn-primary').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var mx = (e.clientX - r.left - r.width / 2) * .25;
+        var my = (e.clientY - r.top - r.height / 2) * .5;
+        btn.style.transform = 'translate(' + mx + 'px,' + (my - 2) + 'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+    });
+  }
+
+  /* La entrada animada del hero (titular + eyebrow + lead + CTAs + stats)
+     ahora es 100% CSS (ver .hero-inner > * / rise-in) — no requiere JS,
+     así el texto del h1 nunca se toca y el degradado de texto no se rompe. */
 })();
 </script>
 
@@ -1114,12 +1300,27 @@ function emptyState(title, msg){
 function deleteBtn(table, id){
   return isAdmin ? '<button type="button" class="card-delete" data-del-table="' + table + '" data-del-id="' + id + '" aria-label="Borrar">🗑</button>' : '';
 }
+function buildGallery(photos, altBase){
+  if(!photos.length) return '';
+  var photosAttr = esc(JSON.stringify(photos));
+  var imgs = '<img src="' + esc(photos[0]) + '" alt="' + esc(altBase) + '" loading="lazy">';
+  var controls = '';
+  if(photos.length > 1){
+    controls = '<button type="button" class="gallery-arrow gallery-prev" aria-label="Foto anterior">‹</button>'
+      + '<button type="button" class="gallery-arrow gallery-next" aria-label="Foto siguiente">›</button>'
+      + '<div class="gallery-dots">' + photos.map(function(_, i){
+          return '<button type="button" data-dot="' + i + '" class="' + (i === 0 ? 'active' : '') + '" aria-label="Foto ' + (i + 1) + '"></button>';
+        }).join('') + '</div>';
+  }
+  return '<div class="gallery" data-photos="' + photosAttr + '" data-index="0">' + imgs + controls + '</div>';
+}
 
 /* ---------- render: SERVICIOS ---------- */
 function renderServices(rows){
   var grid = document.getElementById('servicesGrid');
-  grid.removeAttribute('data-loading');
-  if(!rows.length){ grid.innerHTML = emptyState('Aún no hay servicios publicados', 'Los servicios que añada el equipo aparecerán aquí. Mientras tanto, abre un ticket en Discord para consultar tarifas.'); return; }
+  // Si aún no hay filas en Supabase, dejamos el contenido real ya escrito en el HTML
+  // (visible también para crawlers sin JavaScript) tal cual está.
+  if(!rows.length) return;
   grid.innerHTML = rows.map(function(s, i){
     return '<article class="card reveal in-view" style="position:relative">'
       + deleteBtn('services', s.id)
@@ -1137,14 +1338,14 @@ function renderServices(rows){
 /* ---------- render: TRABAJOS ---------- */
 function renderWorks(rows){
   var wrap = document.getElementById('worksScroll');
-  wrap.removeAttribute('data-loading');
-  if(!rows.length){ wrap.innerHTML = emptyState('Aún no hay trabajos publicados', 'Pronto verás aquí encargos reales de ropa, props y vehículos.'); return; }
+  if(!rows.length) return;
   wrap.innerHTML = rows.map(function(w){
     var photos = toArray(w.photos);
-    var cover = photos[0] || w.photo || '';
+    if(!photos.length && w.photo) photos = [w.photo];
+    var gallery = buildGallery(photos, w.title);
     return '<article class="pf-card" style="position:relative">'
       + deleteBtn('works', w.id)
-      + (cover ? '<div class="pf-thumb" style="background:none; padding:0;"><img src="' + esc(cover) + '" alt="' + esc(w.title) + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="pf-thumb ropa"><span class="tag">Astral Store</span></div>')
+      + (gallery || '<div class="pf-thumb ropa"><span class="tag">Astral Store</span></div>')
       + '<div class="pf-body"><h4>' + esc(w.title) + '</h4>' + (w.text ? '<p>' + esc(w.text) + '</p>' : '') + '</div>'
       + '</article>';
   }).join('');
@@ -1153,16 +1354,23 @@ function renderWorks(rows){
 /* ---------- render: SCRIPTS ---------- */
 function renderScripts(rows){
   var grid = document.getElementById('scriptsGrid');
-  grid.removeAttribute('data-loading');
-  if(!rows.length){ grid.innerHTML = emptyState('Aún no hay scripts en venta', 'Los recursos que publiquemos para tu servidor aparecerán aquí.'); return; }
+  if(!rows.length) return;
   grid.innerHTML = rows.map(function(s){
     var photos = toArray(s.photos);
+    var gallery = buildGallery(photos, s.title);
+    var descr = s.descr || '';
     return '<article class="card script-card" style="position:relative">'
       + deleteBtn('scripts', s.id)
-      + (photos[0] ? '<img src="' + esc(photos[0]) + '" alt="' + esc(s.title) + '" loading="lazy" style="width:100%;height:150px;object-fit:cover;border-radius:12px;">' : '')
-      + '<h4>' + esc(s.title) + '</h4>'
-      + (s.descr ? '<p>' + esc(s.descr) + '</p>' : '')
-      + '<a class="btn btn-ghost" href="' + esc(s.buy_link || DISCORD) + '">Comprar</a>'
+      + gallery
+      + '<div class="script-card-body">'
+        + '<h4>' + esc(s.title) + '</h4>'
+        + (descr ? '<p class="script-desc-short">' + esc(descr) + '</p>' : '')
+        + '<button type="button" class="script-toggle" data-toggle-script>Ver más <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
+        + '<div class="script-more">'
+          + (descr ? '<p>' + esc(descr) + '</p>' : '')
+          + '<a class="btn btn-ghost" href="' + esc(s.buy_link || DISCORD) + '">Comprar</a>'
+        + '</div>'
+      + '</div>'
       + '</article>';
   }).join('');
 }
@@ -1170,8 +1378,7 @@ function renderScripts(rows){
 /* ---------- render: RESEÑAS ---------- */
 function renderReviews(rows){
   var grid = document.getElementById('reviewsGrid');
-  grid.removeAttribute('data-loading');
-  if(!rows.length){ grid.innerHTML = emptyState('Todavía no hay valoraciones', 'Las reseñas de clientes reales aparecerán aquí en cuanto se publiquen.'); return; }
+  if(!rows.length) return;
   grid.innerHTML = rows.map(function(r){
     var stars = Math.max(1, Math.min(5, r.stars || 5));
     return '<article class="card review-card" style="position:relative">'
@@ -1188,14 +1395,14 @@ function renderReviews(rows){
 /* ---------- render: PARTNERS ---------- */
 function renderPartners(rows){
   var row = document.getElementById('partnersRow');
-  row.removeAttribute('data-loading');
-  if(!rows.length){ row.innerHTML = emptyState('Aún no hay partners listados', 'Las colaboraciones con otros servidores y tiendas aparecerán aquí.'); return; }
+  if(!rows.length) return;
   row.innerHTML = rows.map(function(p){
-    var inner = (p.logo ? '<img class="partner-logo" src="' + esc(p.logo) + '" alt="" style="object-fit:cover;">' : '<div class="partner-logo">' + esc(initials(p.name)) + '</div>')
-      + '<span>' + esc(p.name) + '</span>';
+    var logo = p.logo ? '<img class="partner-logo" src="' + esc(p.logo) + '" alt="" style="object-fit:cover;">' : '<div class="partner-logo">' + esc(initials(p.name)) + '</div>';
+    var visit = p.link ? '<span class="partner-visit">Visitar ↗</span>' : '';
+    var inner = logo + '<h4>' + esc(p.name) + '</h4>' + (p.descr ? '<p>' + esc(p.descr) + '</p>' : '') + visit + deleteBtn('partners', p.id);
     var tag = p.link ? 'a' : 'div';
     var href = p.link ? ' href="' + esc(p.link) + '"' : '';
-    return '<' + tag + ' class="partner-chip" style="position:relative"' + href + '>' + inner + deleteBtn('partners', p.id) + '</' + tag + '>';
+    return '<' + tag + ' class="partner-card" style="position:relative"' + href + '>' + inner + '</' + tag + '>';
   }).join('');
 }
 
@@ -1226,6 +1433,40 @@ document.body.addEventListener('click', async function(e){
   var { error } = await sb.from(table).delete().eq('id', id);
   if(error){ alert('No se pudo borrar: ' + error.message); return; }
   loadAll();
+});
+
+/* Galerías de fotos (trabajos + scripts): flechas y puntos, delegado una vez. */
+function setGallerySlide(gallery, index){
+  var photos;
+  try{ photos = JSON.parse(gallery.getAttribute('data-photos')); }catch(e){ photos = []; }
+  if(!photos.length) return;
+  var i = ((index % photos.length) + photos.length) % photos.length;
+  gallery.setAttribute('data-index', i);
+  var img = gallery.querySelector('img');
+  if(img) img.src = photos[i];
+  gallery.querySelectorAll('.gallery-dots button').forEach(function(dot, di){
+    dot.classList.toggle('active', di === i);
+  });
+}
+document.body.addEventListener('click', function(e){
+  var gallery = e.target.closest('.gallery');
+  if(!gallery) return;
+  var current = parseInt(gallery.getAttribute('data-index'), 10) || 0;
+  if(e.target.closest('.gallery-next')) setGallerySlide(gallery, current + 1);
+  else if(e.target.closest('.gallery-prev')) setGallerySlide(gallery, current - 1);
+  else{
+    var dot = e.target.closest('[data-dot]');
+    if(dot) setGallerySlide(gallery, parseInt(dot.getAttribute('data-dot'), 10) || 0);
+  }
+});
+
+/* Botón "Ver más" de los scripts: expande texto completo + botón de compra. */
+document.body.addEventListener('click', function(e){
+  var toggle = e.target.closest('[data-toggle-script]');
+  if(!toggle) return;
+  var card = toggle.closest('.script-card');
+  var expanded = card.classList.toggle('expanded');
+  toggle.firstChild.textContent = expanded ? 'Ver menos ' : 'Ver más ';
 });
 
 /* ---------- MODALES: abrir/cerrar ---------- */
